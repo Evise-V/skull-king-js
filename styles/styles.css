@@ -1,0 +1,78 @@
+body {
+    background-image: none;
+    /* background-image: url("sk_background.jpg"); */
+}
+
+#table-name {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.main-table {
+    /* border: 3px none; */
+    border: 3px solid;
+    margin-top: 2%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    padding: 1%;
+    opacity: none;
+    /* opacity: 70%; */
+}
+
+.header-cell-model{
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    border-style: none;
+    font-size: 1.5em;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+ }
+
+.table-cell-model{
+    display: flex;
+    flex-direction: column;
+    /* background-color: rgba(90, 85, 85, 0.274); */
+}
+.table-cell-upper-row{
+    /* background-color: aqua; */
+    border-top: 1px solid ;
+    border-left: 1px solid ;
+    border-right: 1px solid ;
+    /* border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white; */
+    /* margin: 3px; */
+    display: flex;
+    justify-content: space-evenly;
+}
+.table-cell-bottom-row{
+    /* background-color: chartreuse; */
+    border-bottom: 1px solid ;
+    border-left: 1px solid ;
+    border-right: 1px solid ;
+    /* border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white; */
+    /* margin: 3px; */
+    display: flex;
+}
+.input-field{
+    border: 3px double;
+    /* border: 3px double white; */
+    padding: 5px;
+    font-size: 1em; 
+    /* margin: 5px; */
+    width: 100%;
+    background: none;
+    color:none;
+    /* color: white; */
+}
+.score-field{
+    width: 100%;
+    text-align: right;
+}
+span{
+    color: none;
+    /* color: white; */
+}

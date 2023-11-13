@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/main.js" type="text/javascript" defer></script>
+    <link rel="icon" href="sk_icon.png" type="image/icon type">
+    <title>Skull King</title>
+</head>
+
+<style>
+</style>
+
+<body>
+    <template id="header-cell">
+        <input class="header-cell-model" type="text" name="playerName" list="defaultPlayers" placeholder="Player Name">
+    </template>
+
+    <template id="table-cell">
+        <div class="table-cell-model">
+            <div class="table-cell-upper-row">
+                <input class="input-field bid-field" type="number" name="bid" title="Bid" placeholder="Bid" required
+                    autofocus>
+                <input class="input-field won-field" type="number" name="won" title="Won" placeholder="Won" required>
+                <input class="input-field bonus-field" type="number" name="bonus" title="Bonus" placeholder="Bonus"
+                    required>
+                <input class="input-field total-field" type="number" name="total" title="Total" readonly
+                    placeholder="Total">
+            </div>
+            <div class="table-cell-bottom-row">
+                <input class="input-field score-field" type="number" name="score" title="Score" readonly
+                    placeholder="Score">
+            </div>
+        </div>
+    </template>
+
+    <h1 id="table-name">Skull King Score</h1>
+    <table class="main-table" />
+</body>
+
+</html>
