@@ -3,6 +3,13 @@ body {
     /* background-image: url("sk_background.jpg"); */
 }
 
+#main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #table-name {
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -20,25 +27,26 @@ body {
     /* opacity: 70%; */
 }
 
-.header-cell-model{
+.header-cell-model {
     padding: 0.5em;
     margin-bottom: 0.5em;
     border-style: none;
     font-size: 1.5em;
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
- }
+}
 
-.table-cell-model{
+.table-cell-model {
     display: flex;
     flex-direction: column;
     /* background-color: rgba(90, 85, 85, 0.274); */
 }
-.table-cell-upper-row{
+
+.table-cell-upper-row {
     /* background-color: aqua; */
-    border-top: 1px solid ;
-    border-left: 1px solid ;
-    border-right: 1px solid ;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
     /* border-top: 1px solid white;
     border-left: 1px solid white;
     border-right: 1px solid white; */
@@ -46,33 +54,37 @@ body {
     display: flex;
     justify-content: space-evenly;
 }
-.table-cell-bottom-row{
+
+.table-cell-bottom-row {
     /* background-color: chartreuse; */
-    border-bottom: 1px solid ;
-    border-left: 1px solid ;
-    border-right: 1px solid ;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
     /* border-bottom: 1px solid white;
     border-left: 1px solid white;
     border-right: 1px solid white; */
     /* margin: 3px; */
     display: flex;
 }
-.input-field{
+
+.input-field {
     border: 3px double;
     /* border: 3px double white; */
     padding: 5px;
-    font-size: 1em; 
+    font-size: 1em;
     /* margin: 5px; */
     width: 100%;
     background: none;
-    color:none;
+    color: none;
     /* color: white; */
 }
-.score-field{
+
+.score-field {
     width: 100%;
     text-align: right;
 }
-span{
+
+span {
     color: none;
     /* color: white; */
 }
