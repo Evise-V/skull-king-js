@@ -27,7 +27,7 @@ function generateTable(table, columnNumber) {
         let cell_model;
         for (let i = 0; i <= columnNumber; i++) {
             let cell = row.insertCell();
-            if (i == 0){
+            if (i == 0) {
                 cell_model = document.createElement("span");
                 cell_model.innerText = j
                 // cell_model.style.color = "white"
@@ -53,6 +53,8 @@ function inputChangeListener(e) {
     // console.log("Field Id: "+e.target.id);
     // console.log("Class: "+e.target.className);
     // console.log("Value: "+e.target.value);
+    const fieldValue = parseInt(e.target.value);
+    e.target.value = fieldValue;
     const targetId = e.target.id;
     const cellIndex = targetId.split("_")[1];
     const cellRow = cellIndex.split("-")[0];
@@ -62,63 +64,67 @@ function inputChangeListener(e) {
     const bonus = document.getElementById('bonus_' + cellIndex);
     const total = document.getElementById('total_' + cellIndex);
     const score = document.getElementById('score_' + cellIndex);
-    const parent = bid.parentNode;
+    const parent = e.target.parentNode;
     const total_nodes_cond = '[id^="total_"][id$=' + CSS.escape(cellCol) + ']';
     const all_totals = document.querySelectorAll(total_nodes_cond);
     if (targetId.startsWith('bonus')) {
         console.log("Bonus field entered");
         printFieldsValue();
-
-        // const total_val = total.value;
-        total.value = parseInt(bid.value) * parseInt(20)+ parseInt(bonus.value);
+        total.value = bid.value * 20 + parseInt(bonus.value);
     } else {
         console.log("Bid/Won field entered");
         printFieldsValue();
+        if (e.target.value && (parseInt(e.target.value) > cellRow || parseInt(e.target.value) < 0)) {
+            console.log('   Incorrect Bid/Won');
+            e.target.style.backgroundColor = 'yellow';
+            e.target.value = 0;
+            return;
+        }
+        else {
+            e.target.style.backgroundColor = "white";
+        }
         if (won.value && bid.value && won.value == bid.value) {
             console.log("   Bid == Won");
             if (bid.value == 0) {
                 console.log("   !!! Mizer !!!");
                 bonus.value = 0;
-                total.value = cellRow * parseInt(10);
+                total.value = cellRow * 10;
             }
             else {
                 bonus.readOnly = false;
                 bonus.value = 0;
-                total.value = parseInt(bid.value) * parseInt(20);
+                total.value = bid.value * 20;
             }
         }
         else if (won.value && bid.value && won.value != bid.value) {
             console.log("   Bid != Won");
             if (bid.value == 0) {
-                console.log("   !!! Mizer Lost!!!");
+                console.log("   !!! Mizer Fail !!!");
                 bonus.value = 0;
-                total.value = cellRow * parseInt(-10);
+                total.value = cellRow * -10;
             } else {
                 bonus.value = 0;
                 bonus.readOnly = true;
-                total.value = Math.abs(bid.value - won.value) * parseInt(-10);
+                total.value = Math.abs(bid.value - won.value) * -10;
             }
         }
 
     }
     if (won.value && bid.value && won.value == bid.value) {
-        Array.from(parent.childNodes).forEach(el => {
-            if (el.id)
-                el.style.backgroundColor = "lightgreen";
-        })
+        Array.from(parent.children).forEach(field =>
+            field.style.backgroundColor = "lightgreen");
     }
     else if (won.value && bid.value && won.value != bid.value) {
-        Array.from(parent.childNodes).forEach(el => {
-            if (el.id)
-                el.style.backgroundColor = "orangered";
-        })
+        Array.from(parent.children).forEach(field =>
+            field.style.backgroundColor = "orangered");
     }
     const valued_totals = Array.from(all_totals).filter(total => total.value);
-    for (const v_t of valued_totals) {
-        console.log("   Valued total:" + v_t.id);
-    }
+    valued_totals.forEach(v_t => console.log("   Valued total:" + v_t.id));
+    // for (const v_t of valued_totals) {
+    //     console.log("   Valued total:" + v_t.id);
+    // }
     score.value = valued_totals.reduce((acc, curVal) => acc + parseInt(curVal.value), 0);
-    
+
     function printFieldsValue() {
         console.log("   Cell index:" + cellIndex);
         console.log("   Cell row:" + cellRow);
