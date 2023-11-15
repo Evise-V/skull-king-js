@@ -66,7 +66,9 @@ function inputChangeListener(e) {
     const score = document.getElementById('score_' + cellIndex);
     const parent = e.target.parentNode;
     const total_nodes_cond = '[id^="total_"][id$=' + CSS.escape(cellCol) + ']';
+    const score_nodes_cond = '[id^="score_"][id$=' + CSS.escape(cellCol) + ']';
     const all_totals = document.querySelectorAll(total_nodes_cond);
+    const all_scores = document.querySelectorAll(score_nodes_cond);
     if (targetId.startsWith('bonus')) {
         console.log("Bonus field entered");
         printFieldsValue();
@@ -118,12 +120,17 @@ function inputChangeListener(e) {
         Array.from(parent.children).forEach(field =>
             field.style.backgroundColor = "orangered");
     }
-    const valued_totals = Array.from(all_totals).filter(total => total.value);
-    valued_totals.forEach(v_t => console.log("   Valued total:" + v_t.id));
-    // for (const v_t of valued_totals) {
-    //     console.log("   Valued total:" + v_t.id);
-    // }
-    score.value = valued_totals.reduce((acc, curVal) => acc + parseInt(curVal.value), 0);
+    // const valued_totals = Array.from(all_totals).filter(total => total.value);
+    const valued_totals_to_count = Array.from(all_totals).slice(0, cellRow).filter(total => total.value);
+    const valued_scores_to_update = Array.from(all_scores).slice(cellRow).filter(score => score.value);
+    valued_totals_to_count.forEach(v_t => console.log("   Valued total to count:" + v_t.id));
+    valued_scores_to_update.forEach(v_s => console.log("   Valued score to update:" + v_s.id));
+    score.value = valued_totals_to_count.reduce((acc, curVal) => acc + parseInt(curVal.value), 0);
+    valued_scores_to_update.forEach(v_s => {
+        console.log('Updating score: ' + v_s.id);
+        const row_to_update = v_s.id.split("_")[1].split("-")[0];
+        v_s.value = Array.from(all_totals).slice(0, row_to_update).reduce((acc, curVal) => acc + parseInt(curVal.value), 0);
+    });
 
     function printFieldsValue() {
         console.log("   Cell index:" + cellIndex);
