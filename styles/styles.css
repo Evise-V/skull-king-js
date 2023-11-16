@@ -84,3 +84,15 @@ span{
     font-size: 1vw;
     /* color: white; */
 }
+.invalid-input{
+    background-color: yellow;
+}
+.valid-input{
+    background-color: white;
+}
+.round-won{
+    background-color: lightgreen;
+}
+.round-lost{
+    background-color: lightsalmon;
+}
