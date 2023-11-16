@@ -41,12 +41,13 @@ function generateTable(table, columnNumber) {
                 cell_model.querySelector(".bonus-field").readOnly = true;
                 cell_model.querySelector(".total-field").setAttribute("id", "total_" + j + "-" + i);
                 cell_model.querySelector(".score-field").setAttribute("id", "score_" + j + "-" + i);
-                const tableCell = cell_model.querySelector(".table-cell-model").addEventListener('change', inputChangeListener);
+                // const tableCell = cell_model.querySelector(".table-cell-model").addEventListener('change', inputChangeListener);
             }
 
             cell.append(cell_model);
         }
     }
+    document.querySelector('tbody').addEventListener('change', inputChangeListener);
 }
 
 function inputChangeListener(e) {
@@ -65,10 +66,10 @@ function inputChangeListener(e) {
     const total = document.getElementById('total_' + cellIndex);
     const score = document.getElementById('score_' + cellIndex);
     const parent = e.target.parentNode;
-    const total_nodes_cond = '[id^="total_"][id$=' + CSS.escape(cellCol) + ']';
-    const score_nodes_cond = '[id^="score_"][id$=' + CSS.escape(cellCol) + ']';
-    const all_totals = document.querySelectorAll(total_nodes_cond);
-    const all_scores = document.querySelectorAll(score_nodes_cond);
+    const total_nodes_pattern = '[id^="total_"][id$=' + CSS.escape(cellCol) + ']';
+    const score_nodes_pattern = '[id^="score_"][id$=' + CSS.escape(cellCol) + ']';
+    const all_totals = document.querySelectorAll(total_nodes_pattern);
+    const all_scores = document.querySelectorAll(score_nodes_pattern);
     if (targetId.startsWith('bonus')) {
         console.log("Bonus field entered");
         printFieldsValue();
@@ -78,12 +79,18 @@ function inputChangeListener(e) {
         printFieldsValue();
         if (e.target.value && (parseInt(e.target.value) > cellRow || parseInt(e.target.value) < 0)) {
             console.log('   Incorrect Bid/Won');
-            e.target.style.backgroundColor = 'yellow';
-            e.target.value = 0;
+            e.target.classList.remove('valid-input','round-won','round-lost');
+            e.target.classList.add('invalid-input');
+            // e.target.style.backgroundColor = 'yellow';
+            e.target.value = null;
+            total.value = null;
+            score.value = null;
             return;
         }
         else {
-            e.target.style.backgroundColor = "white";
+            e.target.classList.remove('invalid-input','round-won','round-lost');
+            e.target.classList.add('valid-input');
+            // e.target.style.backgroundColor = "white";
         }
         if (won.value && bid.value && won.value == bid.value) {
             console.log("   Bid == Won");
@@ -110,15 +117,20 @@ function inputChangeListener(e) {
                 total.value = Math.abs(bid.value - won.value) * -10;
             }
         }
-
     }
     if (won.value && bid.value && won.value == bid.value) {
-        Array.from(parent.children).forEach(field =>
-            field.style.backgroundColor = "lightgreen");
+        Array.from(parent.children).forEach(field => {
+            field.classList.remove('round-lost');
+            field.classList.add('round-won');
+            // field.style.backgroundColor = "lightgreen";
+        })
     }
     else if (won.value && bid.value && won.value != bid.value) {
-        Array.from(parent.children).forEach(field =>
-            field.style.backgroundColor = "orangered");
+        Array.from(parent.children).forEach(field =>{
+            field.classList.remove('round-won');
+            field.classList.add('round-lost');
+            // field.style.backgroundColor = "orangered";
+        })
     }
     // const valued_totals = Array.from(all_totals).filter(total => total.value);
     const valued_totals_to_count = Array.from(all_totals).slice(0, cellRow).filter(total => total.value);
@@ -131,7 +143,7 @@ function inputChangeListener(e) {
         const row_to_update = v_s.id.split("_")[1].split("-")[0];
         v_s.value = Array.from(all_totals).slice(0, row_to_update).reduce((acc, curVal) => acc + parseInt(curVal.value), 0);
     });
-
+    
     function printFieldsValue() {
         console.log("   Cell index:" + cellIndex);
         console.log("   Cell row:" + cellRow);
